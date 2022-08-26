@@ -1,0 +1,64 @@
+<header class="header">
+  <div class="container">
+    <div class="headerContainer">
+      <nav class="header__nav headerNav">
+        <a href="#" class="logo" onclick="event.preventDefault()">
+          <img src="./images/icons/film.png" alt="logo" class="logo__icon-wrapper" />
+          <span class="logo__text">Filmoteka</span>
+        </a>
+        <ul class="nav__list navList">
+          <li class="nav__list-item">
+            <a
+              href="#"
+              class="nav__list-text nav__list-text--activ js-heder-home"
+              onclick="event.preventDefault()"
+              >HOME</a
+            >
+          </li>
+          <li class="nav__list-item">
+            <a href="#" class="nav__list-text nav__list-text--home js-library">MY LIBRARY</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header__search headerSearch">
+      <form class="search-form js-searchForm" id="search-form">
+        <input
+          class="search__input"
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search movies..."
+        />
+        <button class="search__btn" type="submit">
+          <img class="search__icon" src="./images/icons/search.svg" alt="search" />
+        </button>
+      </form>
+      <select class="user_profile_lang" name="user_profile_lang">
+        <option class="lang-en" value="0">eng</option>
+        <option class="lang-ru" value="1">рус</option>
+        <option class="lang-uk" value="2">укр</option>
+      </select>
+    </div>
+    <ul class="btn-groupList" style="display: none">
+      <li class="modal-buttons-add-item">
+        <button
+          class="modal-btn-add header-btn-add--watched library js-wathed-header"
+          style="color: #ffff"
+          type="button"
+        >
+          WATCHED
+        </button>
+      </li>
+      <li class="modal-buttons-item">
+        <button
+          class="modal-btn-add header-btn-add--queue library js-queue-header"
+          style="color: #ffff"
+          type="button"
+        >
+          QUEUE
+        </button>
+      </li>
+    </ul>
+  </div>
+</header>

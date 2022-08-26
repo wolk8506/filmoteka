@@ -1,0 +1,51 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--main-color);
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+input {
+ outline: none;
+}
+
+.list {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  display: block;
+}
+
+button {
+  padding: 0;
+  cursor: pointer;
+  display: inline-block;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
