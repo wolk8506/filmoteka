@@ -1,5 +1,19 @@
 # Parcel boilerplate
 
+## 🚀 Tech Stack
+
+![Parcel](https://img.shields.io/badge/-Parcel-FF6C37?logo=parcel&logoColor=white&style=flat-square)
+![HTML](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white&style=flat-square)
+![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black&style=flat-square)
+![Sass](https://img.shields.io/badge/-Sass-CC6699?logo=sass&logoColor=white&style=flat-square)
+![Handlebars](https://img.shields.io/badge/-Handlebars.js-f0772b?logo=handlebarsdotjs&logoColor=white&style=flat-square)
+![Axios](https://img.shields.io/badge/-Axios-5A29E4?logo=axios&logoColor=white&style=flat-square)
+![Notiflix](https://img.shields.io/badge/-Notiflix-FF3D00?logoColor=white&style=flat-square)
+![Spin.js](https://img.shields.io/badge/-Spin.js-00BFA5?logoColor=white&style=flat-square)
+![Git](https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white&style=flat-square)
+![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat-square)
+
+
 ## Скрытые файлы
 
 Включите отображение скрытых файлов и папок в проводнике своей операционной системы, иначе вы не
