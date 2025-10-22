@@ -1,18 +1,19 @@
 // ************************************************************************
 import { langPageChoice } from './localization';
 import onEscBtnClick from './modalClose';
-const axios = require('axios');
+import axios from 'axios';
+
 import { refs } from './refs';
 
 refs.movieModal.addEventListener('click', movieId);
 
 function movieId(e) {
-  if (e.path[1].nodeName !== 'A') {
-    return;
-  }
+  const path = e.composedPath();
+  const anchor = path.find(el => el.nodeName === 'A' && el.dataset.id);
 
-  movieIdF(e.path[1].dataset.id);
+  if (!anchor) return;
 
+  movieIdF(anchor.dataset.id);
   modalOpen();
 }
 
@@ -27,7 +28,7 @@ function movieIdF(movieId) {
     .get(`${BASE_URL}movie/${movieId}?api_key=${API_KEY}&language=${langPageChoice.id}`)
     .then(response => {
       modalMovieData(response.data);
-      console.log(response.data);
+      console.log('response.data: ', response.data);
     });
 }
 

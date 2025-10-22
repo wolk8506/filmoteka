@@ -73,31 +73,9 @@ const langPage = [
   },
 ];
 
-export let langPageChoice = {
-  id: 'en-EN',
-  home: 'HOME',
-  my_library: 'MY LIBRARY',
-  vote: 'Vote / Votes',
-  popularity: 'Popularity',
-  title: 'Original Title',
-  genre: 'genre',
-  trailer: 'Trailer',
-  about: 'ABOUT',
-  btn1: 'delete',
-  btn2: 'ADD TO WATCHED',
-  btn3: 'add to queue',
-  btn4: 'WATCHED',
-  btn5: 'QUEUE',
-  search: 'Search movies...',
-  noticeDelW: 'The movie has been removed from the WATCHED library',
-  noticeAddW: 'The movie has been added to the WATCHED library',
-  noticeInW: 'The film is in the library WATCHED',
-  noticeDelQ: 'Movie removed from library QUEUE',
-  noticeAddQ: 'Movie added to library QUEUE',
-  noticeInQ: 'The film is in the library QUEUE',
-};
+export let langPageChoice = langPage[0];
 
-refs.btnLang.addEventListener('change', lang);
+// refs.btnLang.addEventListener('change', lang);
 
 function lang() {
   langPageChoice = langPage[this.value];
