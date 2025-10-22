@@ -1,6 +1,7 @@
 // *****  Запрос жанров фильмоы  *******************************************
 
-const axios = require('axios');
+import axios from 'axios';
+
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = 'a8df323e9ca157a6f58df54190ee006c';
 

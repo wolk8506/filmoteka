@@ -17,5 +17,3 @@ let pageResetLoad = Number(localStorage.getItem('pageResetLoad'));
 if (pageResetLoad === 0) {
   localStorage.setItem(`pageResetLoad`, `1`);
 }
-
-// let langDefault = Number(localStorage.getItem('langDefault'));

@@ -2,9 +2,11 @@
 import { refs } from './refs';
 import { langPageChoice } from './localization';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import { count } from './moviePopular';
+
 // **** переменные ****
-const axios = require('axios');
+
+import axios from 'axios';
+
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = 'a8df323e9ca157a6f58df54190ee006c';
 let movieWatched = JSON.parse(localStorage.getItem('movieWatched'));
@@ -85,7 +87,6 @@ function activBtnHeader() {
 // **** Запрос и рендер ****
 // Запрос фильмов ID
 function movieIdF(movieId) {
-  // console.log(movieId.length);
   if (movieId === undefined) {
     refs.movie.innerHTML =
       '<div class="default-img-border"><img class="default-img" src="https://cdn.pixabay.com/photo/2016/02/01/18/59/filmstrip-1174228_960_720.png" width="450"/></div>';
@@ -140,33 +141,35 @@ function render({ title, poster_path, genres, release_date, vote_average, id }) 
 refs.movieModal.addEventListener('click', movieId);
 refs.btnAddWatched.addEventListener('click', addMovieWatched);
 refs.btnAddQueue.addEventListener('click', addMovieQueue);
-
 function movieId(e) {
-  if (e.path[1].nodeName !== 'A') {
-    return;
-  }
-  movieIdWatched();
-  movieIdQueue();
-  // проверяет включает ли массив ID Watched
-  function movieIdWatched() {
-    if (movieWatched.includes(e.path[1].dataset.id)) {
+  const path = e.composedPath();
+
+  const anchor = path.find(el => el.nodeName === 'A' && el.dataset.id);
+
+  if (!anchor) return;
+
+  const id = anchor.dataset.id;
+
+  movieIdWatched(id);
+  movieIdQueue(id);
+
+  function movieIdWatched(id) {
+    if (movieWatched.includes(id)) {
       btnName1Wanted();
-      return;
     } else {
       btnName2Wanted();
     }
   }
-  // проверяет включает ли массив ID Queue
-  function movieIdQueue() {
-    if (movieQueue.includes(e.path[1].dataset.id)) {
+
+  function movieIdQueue(id) {
+    if (movieQueue.includes(id)) {
       btnName1Queue();
-      return;
     } else {
       btnName2Queue();
     }
   }
 }
-// Название кнопок Watched
+
 function btnName1Wanted() {
   refs.btnAddWatched.innerHTML = `${langPageChoice.btn4}`; //'WATCHED';
   if (3 === Number(localStorage.getItem('pageResetLoad'))) {
@@ -190,84 +193,66 @@ function btnName2Queue() {
 // **** ****
 
 function addMovieWatched(e) {
-  console.log('click W');
+  const id = e.currentTarget.value;
+  const page = Number(localStorage.getItem('pageResetLoad'));
 
-  // Добавление в библеотеку Watched со страниц 1 и 2
-  if (movieWatched.includes(e.path[0].value) && 3 > Number(localStorage.getItem('pageResetLoad'))) {
-    Notify.warning(`${langPageChoice.noticeInW}`); //'Фильм уже в библиотеке');
-    return;
-  } else if (
-    !movieWatched.includes(e.path[0].value) &&
-    3 > Number(localStorage.getItem('pageResetLoad'))
-  ) {
-    movieWatched.push(e.path[0].value);
-    btnName1Wanted();
-    Notify.success(`${langPageChoice.noticeAddW}`);
-  }
-  // Удаляем-добавляем в библеотеку Watched со страниц 1 и 2
-  if (
-    movieWatched.includes(e.path[0].value) &&
-    3 === Number(localStorage.getItem('pageResetLoad'))
-  ) {
-    movieWatched.splice(movieWatched.indexOf(e.path[0].value), 1);
-    btnName2Wanted();
-    Notify.failure(`${langPageChoice.noticeDelW}`); //'Фильм удален из библиотеки');
-  } else if (
-    !movieWatched.includes(e.path[0].value) &&
-    3 <= Number(localStorage.getItem('pageResetLoad'))
-  ) {
-    movieWatched.push(e.path[0].value);
-    btnName1Wanted();
-    Notify.success(`${langPageChoice.noticeAddW}`);
-  }
-  //Уведомление о добавленном фильме
-  if (
-    movieWatched.includes(e.path[0].value) &&
-    3 <= Number(localStorage.getItem('pageResetLoad'))
-  ) {
-    Notify.warning(`${langPageChoice.noticeInW}`);
+  const isInWatched = movieWatched.includes(id);
+
+  if (page < 3) {
+    if (isInWatched) {
+      Notify.warning(langPageChoice.noticeInW);
+      return;
+    } else {
+      movieWatched.push(id);
+      btnName1Wanted();
+      Notify.success(langPageChoice.noticeAddW);
+    }
+  } else {
+    if (isInWatched) {
+      movieWatched.splice(movieWatched.indexOf(id), 1);
+      btnName2Wanted();
+      Notify.failure(langPageChoice.noticeDelW);
+    } else {
+      movieWatched.push(id);
+      btnName1Wanted();
+      Notify.success(langPageChoice.noticeAddW);
+      Notify.warning(langPageChoice.noticeInW);
+    }
   }
 
-  // Запись в хранилище
   localStorage.setItem('movieWatched', JSON.stringify(movieWatched));
-
   arr1();
 }
 
 function addMovieQueue(e) {
-  // Добавление в библеотеку Queue со страниц 1 и 2
-  if (movieQueue.includes(e.path[0].value) && 3 > Number(localStorage.getItem('pageResetLoad'))) {
-    Notify.warning(`${langPageChoice.noticeInQ}`); //'Фильм уже в библиотеке');
-    return;
-  } else if (
-    !movieQueue.includes(e.path[0].value) &&
-    3 > Number(localStorage.getItem('pageResetLoad'))
-  ) {
-    movieQueue.push(e.path[0].value);
-    btnName1Queue();
-    Notify.success(`${langPageChoice.noticeAddQ}`);
-  }
-  // Удаляем-добавляем в библеотеку Queue со страниц 1 и 2
-  if (movieQueue.includes(e.path[0].value) && 4 === Number(localStorage.getItem('pageResetLoad'))) {
-    movieQueue.splice(movieQueue.indexOf(e.path[0].value), 1);
+  const id = e.currentTarget.value;
+  const page = Number(localStorage.getItem('pageResetLoad'));
+  const isInQueue = movieQueue.includes(id);
+
+  if (page < 3) {
+    if (isInQueue) {
+      Notify.warning(langPageChoice.noticeInQ);
+      return;
+    } else {
+      movieQueue.push(id);
+      btnName1Queue();
+      Notify.success(langPageChoice.noticeAddQ);
+    }
+  } else if (page === 4 && isInQueue) {
+    movieQueue.splice(movieQueue.indexOf(id), 1);
     btnName2Queue();
-    Notify.failure(`${langPageChoice.noticeDelQ}`); //'Фильм удален из библиотеки');
-  } else if (
-    !movieQueue.includes(e.path[0].value) &&
-    3 <= Number(localStorage.getItem('pageResetLoad'))
-  ) {
-    movieQueue.push(e.path[0].value);
+    Notify.failure(langPageChoice.noticeDelQ);
+  } else if (!isInQueue && page >= 3) {
+    movieQueue.push(id);
     btnName1Queue();
-    Notify.success(`${langPageChoice.noticeAddQ}`);
+    Notify.success(langPageChoice.noticeAddQ);
+    Notify.warning(langPageChoice.noticeInQ);
   }
-  //Уведомление о добавленном фильме
-  if (movieQueue.includes(e.path[0].value) && 3 <= Number(localStorage.getItem('pageResetLoad'))) {
-    Notify.warning(`${langPageChoice.noticeInQ}`);
-  }
-  // Запись в хранилище
+
   localStorage.setItem('movieQueue', JSON.stringify(movieQueue));
   arrQ();
 }
+
 // **** Закрытие модалки ****
 
 refs.closeModalBtn.addEventListener('click', toggleModal);
@@ -381,8 +366,6 @@ function renderPagination(pages) {
 
   const btn05l = document.querySelector('#btn05l');
   btn05l.addEventListener('click', function () {
-    console.log(btn05l.innerText);
-
     count = btn05l.innerText - 1;
     nextClickFu();
     btn5 = 5;
@@ -440,7 +423,6 @@ function renderPagination(pages) {
     nextClick.style.display = 'none';
     prevClick.style.display = 'none';
   }
-  console.log('pages - ' + pages);
 }
 
 function nextClickFu() {
@@ -466,8 +448,6 @@ function movieQuery() {
     movieIdF(sliced_arrayW[count - 1]);
     // renderPagination(pageLib);
   }
-  console.log('count - ' + count);
-  console.log('pageLib - ' + pageLib);
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

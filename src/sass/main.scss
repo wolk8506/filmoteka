@@ -4,25 +4,23 @@
  */
 
 // Стили для файла с примером HTML-фрагмента
-@import './base/_base';
-@import './base/_container';
+@use 'base/_base';
+@use 'base/_container';
 
-@import './components/header';
-@import './components/buttonToTop';
-@import './components/spinner';
+@use 'components/header';
+@use 'components/buttonToTop';
+@use 'components/spinner';
 
 
-@import './components/buttonToTop';
-@import './components/header';
-@import './utils/_variables';
-@import './utils/_mixins';
+@use 'utils/_variables';
+@use 'utils/_mixins';
 
-@import './components/_modal';
+@use 'components/_modal';
 
-@import './layout/footer';
+@use 'layout/footer';
 
-@import './components/main-section';
-@import './utils/visually-hidden';
+@use 'components/main-section';
+@use 'utils/visually-hidden';
 
 
 
